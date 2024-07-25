@@ -1,0 +1,110 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+public class PhonePadConverter
+{
+    // Define a dictionary to map button presses to letters, including special characters for "1" and space for "0"
+    private static readonly Dictionary<string, string[]> buttonMap = new Dictionary<string, string[]>
+    {
+        { "1", new[] { "&", "'", "(", ")", "[", "]", "{", "}", " ", "!", "\"", "#", "$", "%", "^", "&", "*", "(", ")", "-", "=", "+", "{", "}", "[", "]", ";", ":", "'", "\"", "<", ">", ",", ".", "?", "/" } },
+        { "2", new[] { "A", "B", "C" } },
+        { "3", new[] { "D", "E", "F" } },
+        { "4", new[] { "G", "H", "I" } },
+        { "5", new[] { "J", "K", "L" } },
+        { "6", new[] { "M", "N", "O" } },
+        { "7", new[] { "P", "Q", "R", "S" } },
+        { "8", new[] { "T", "U", "V" } },
+        { "9", new[] { "W", "X", "Y", "Z" } },
+        { "0", new[] { " " } }, // Adding 0 as a space
+        { "*", new[] { "" } }, // Special handling for *
+        { "#", new[] { "" } }  // Special handling for #
+    };
+
+    // Implement the OldPhonePad method
+    public static string OldPhonePad(string input)
+    {
+        // Initialize variables
+        StringBuilder result = new StringBuilder();
+        StringBuilder currentSequence = new StringBuilder();
+
+        // Process each character in the input string
+        for (int i = 0; i < input.Length; i++)
+        {
+            char currentChar = input[i];
+
+            // Handle special characters
+            if (currentChar == ' ' || currentChar == '*')
+            {
+                if (currentSequence.Length > 0)
+                {
+                    result.Append(GetCharacterFromSequence(currentSequence.ToString()));
+                    currentSequence.Clear();
+                }
+
+                if (currentChar == '*')
+                {
+                    // Handle backspace: remove the last character from the result
+                    if (result.Length > 0)
+                    {
+                        result.Length--; // Removes the last character
+                    }
+                }
+                continue;
+            }
+            else if (currentChar == '#')
+            {
+                // On encountering '#', finalize the last sequence
+                if (currentSequence.Length > 0)
+                {
+                    result.Append(GetCharacterFromSequence(currentSequence.ToString()));
+                    currentSequence.Clear();
+                }
+                continue;
+            }
+
+            // Handle normal characters
+            if (currentSequence.Length > 0 && currentSequence[0] != currentChar)
+            {
+                result.Append(GetCharacterFromSequence(currentSequence.ToString()));
+                currentSequence.Clear();
+            }
+
+            currentSequence.Append(currentChar);
+        }
+
+        // Handle any remaining sequence after the loop
+        if (currentSequence.Length > 0)
+        {
+            result.Append(GetCharacterFromSequence(currentSequence.ToString()));
+        }
+
+        return result.ToString();
+    }
+
+    private static string GetCharacterFromSequence(string sequence)
+    {
+        // Check the button pressed
+        char button = sequence[0];
+        // Calculate the number of presses
+        int pressCount = sequence.Length;
+
+        // Get the character options for the button
+        if (buttonMap.ContainsKey(button.ToString()))
+        {
+            var options = buttonMap[button.ToString()];
+            // Return the correct character based on the number of presses
+            return options[(pressCount - 1) % options.Length];
+        }
+        return string.Empty;
+    }
+
+    public static void Main()
+    {
+        // Demonstrate the functionality with provided examples
+        Console.WriteLine(OldPhonePad("33#")); // Output: E
+        Console.WriteLine(OldPhonePad("227*#")); // Output: B
+        Console.WriteLine(OldPhonePad("4433555 555666#")); // Output: HELLO
+        Console.WriteLine(OldPhonePad("8 88777444666*664#")); // Output: TURING
+    }
+}
