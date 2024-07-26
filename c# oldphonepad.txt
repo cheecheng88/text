@@ -7,16 +7,16 @@ public class PhonePadConverter
     // Define a dictionary to map button presses to letters, including special characters for "1" and space for "0"
     private static readonly Dictionary<string, string[]> buttonMap = new Dictionary<string, string[]>
     {
-        { "1", new[] { "1", "&", "'", "(", ")", "[", "]", "{", "}", " ", "!", "\"", "#", "$", "%", "^", "&", "*", "(", ")", "-", "=", "+", "{", "}", "[", "]", ";", ":", "'", "\"", "<", ">", ",", ".", "?", "/" } },
-        { "2", new[] { "A", "B", "C", "2" } },
-        { "3", new[] { "D", "E", "F", "3"  } },
-        { "4", new[] { "G", "H", "I", "4"  } },
-        { "5", new[] { "J", "K", "L", "5"  } },
-        { "6", new[] { "M", "N", "O", "6"  } },
-        { "7", new[] { "P", "Q", "R", "S", "7"  } },
-        { "8", new[] { "T", "U", "V", "8" } },
-        { "9", new[] { "W", "X", "Y", "Z", "9" } },
-        { "0", new[] { " ", "0" } }, // Adding 0 as a space
+        { "1", new[] { "&", "'", "(", ")", "[", "]", "{", "}", " ", "!", "\"", "#", "$", "%", "^", "&", "*", "(", ")", "-", "=", "+", "{", "}", "[", "]", ";", ":", "'", "\"", "<", ">", ",", ".", "?", "/" } },
+        { "2", new[] { "A", "B", "C" } },
+        { "3", new[] { "D", "E", "F" } },
+        { "4", new[] { "G", "H", "I" } },
+        { "5", new[] { "J", "K", "L" } },
+        { "6", new[] { "M", "N", "O" } },
+        { "7", new[] { "P", "Q", "R", "S" } },
+        { "8", new[] { "T", "U", "V" } },
+        { "9", new[] { "W", "X", "Y", "Z" } },
+        { "0", new[] { " " } }, // Adding 0 as a space
         { "*", new[] { "" } }, // Special handling for *
         { "#", new[] { "" } }  // Special handling for #
     };
